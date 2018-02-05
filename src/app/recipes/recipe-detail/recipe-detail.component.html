@@ -16,9 +16,9 @@
       <span class="caret"></span>
     </button>
     <ul class="dropdown-menu">
-      <li><a href="#" (click)="toShopingList()">To shoping list</a></li>
-      <li><a href="#">Edit recipe</a></li>
-      <li><a href="#">Delete recipe</a></li>
+      <li><a style="cursor: pointer" (click)="toShopingList()">To shoping list</a></li>
+      <li><a style="cursor: pointer" [routerLink]="['edit']">Edit recipe</a></li>
+      <li><a style="cursor: pointer">Delete recipe</a></li>
     </ul>
   </div>
 </div>
