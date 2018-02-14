@@ -17,6 +17,8 @@ import { RecipeStartComponent } from './recipes/recipe-start/recipe-start.compon
 import { RecipeEditComponent } from './recipes/recipe-edit/recipe-edit.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {RecipeService} from "./recipes/recipe.service";
+import {ServerService} from "./server.service";
+import {HttpModule} from "@angular/http";
 
 
 
@@ -38,9 +40,10 @@ import {RecipeService} from "./recipes/recipe.service";
     BrowserModule,
     AppRoutesModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpModule
   ],
-  providers: [ShoppingService, RecipeService],
+  providers: [ShoppingService, RecipeService, ServerService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

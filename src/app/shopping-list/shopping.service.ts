@@ -1,7 +1,10 @@
 import {Ingredient} from "../shared/ingredients.model";
-import {EventEmitter} from "@angular/core";
 import {Subject} from "rxjs/Subject";
+import {ServerService} from "../server.service";
+import {Response} from "@angular/http";
+import {Injectable} from "@angular/core";
 
+@Injectable()
 export class ShoppingService {
   ingredientsChange = new Subject<Ingredient[]>();
   ingredientsEdit = new Subject<number>();
@@ -10,6 +13,7 @@ export class ShoppingService {
     new Ingredient('macaroni', 10),
     new Ingredient('cheeze', 5)
   ];
+  constructor(private serverService: ServerService) {}
   getShopingList() {
     return this.ingredients.slice();
   }
@@ -31,5 +35,26 @@ export class ShoppingService {
   addIngredients(ingredients: Ingredient[]) {
     this.ingredients.push(...ingredients);
     this.ingredientsChange.next( this.ingredients.slice() );
+  }
+  saveIngredients() {
+    this.serverService.saveIngredients(this.ingredients).subscribe(
+      (response: Response) => {
+        console.log(response);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
+  fetchIngredients() {
+    this.serverService.getIngredients().subscribe(
+      (ingredients: Ingredient[]) => {
+        this.ingredients = ingredients;
+        this.ingredientsChange.next( this.ingredients.slice() );
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
 }

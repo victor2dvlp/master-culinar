@@ -14,6 +14,7 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
  @Input('recipeData') RecipeData: RecipeModel;
  subscription: Subscription;
  id: number;
+ subscriptionRecipe: Subscription;
 
   constructor(private recipeService: RecipeService, private route: ActivatedRoute, private router: Router) { }
 
@@ -24,6 +25,9 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
         this.RecipeData = this.recipeService.getRecipe(this.id);
 
       }
+    );
+    this.subscriptionRecipe = this.recipeService.recipeChanged.subscribe(
+      (recipes: RecipeModel[]) => this.RecipeData = recipes[this.id]
     );
   }
   ngOnDestroy() {

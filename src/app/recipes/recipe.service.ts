@@ -1,8 +1,10 @@
 import {RecipeModel} from "./recipe.model";
-import {EventEmitter, Injectable} from "@angular/core";
+import { Injectable} from "@angular/core";
 import {Ingredient} from "../shared/ingredients.model";
 import {ShoppingService} from "../shopping-list/shopping.service";
 import {Subject} from "rxjs/Subject";
+import {ServerService} from "../server.service";
+import {Response} from "@angular/http";
 
 @Injectable()
 export class RecipeService {
@@ -44,7 +46,7 @@ export class RecipeService {
     )
   ];
 
-  constructor(private shopService: ShoppingService) {}
+  constructor(private shopService: ShoppingService, private serverService: ServerService) {}
 
   getRecipes() {
     return this.recipes.slice();
@@ -66,5 +68,26 @@ export class RecipeService {
   deleteRecipe(index: number) {
     this.recipes.splice(index, 1);
     this.recipeChanged.next(this.recipes.slice());
+  }
+  saveRecipes() {
+    this.serverService.saveRecipes(this.recipes).subscribe(
+      (response: Response) => {
+        console.log(response);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
+  fetchRecipes() {
+    this.serverService.getRecipes().subscribe(
+      (recipes: RecipeModel[]) => {
+        this.recipes = recipes;
+        this.recipeChanged.next(this.recipes.slice());
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
 }
