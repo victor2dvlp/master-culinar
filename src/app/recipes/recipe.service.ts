@@ -3,7 +3,7 @@ import { Injectable} from "@angular/core";
 import {Ingredient} from "../shared/ingredients.model";
 import {ShoppingService} from "../shopping-list/shopping.service";
 import {Subject} from "rxjs/Subject";
-import {ServerService} from "../server.service";
+import {ServerService} from "../shared/server.service";
 import {Response} from "@angular/http";
 
 @Injectable()

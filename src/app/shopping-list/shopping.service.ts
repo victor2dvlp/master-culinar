@@ -1,6 +1,6 @@
 import {Ingredient} from "../shared/ingredients.model";
 import {Subject} from "rxjs/Subject";
-import {ServerService} from "../server.service";
+import {ServerService} from "../shared/server.service";
 import {Response} from "@angular/http";
 import {Injectable} from "@angular/core";
 
