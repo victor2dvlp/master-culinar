@@ -1,9 +1,12 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
-import {RecipeModel} from "../recipe.model";
-import {Ingredient} from "../../shared/ingredients.model";
-import {RecipeService} from "../recipe.service";
-import {ActivatedRoute, ActivatedRouteSnapshot, Params, Router} from "@angular/router";
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {ActivatedRoute, Params, Router} from "@angular/router";
 import {Subscription} from "rxjs/Subscription";
+import {Store} from "@ngrx/store";
+import * as ShoppingListActions from '../../shopping-list/state/shopping-list.actions';
+import {Observable} from "rxjs/Observable";
+import * as fromRecipeReducers from '../store/recipes.reducers';
+import * as RecipesActions from '../store/recipes.actions';
+import 'rxjs/add/operator/take';
 
 @Component({
   selector: 'app-recipe-detail',
@@ -11,34 +14,54 @@ import {Subscription} from "rxjs/Subscription";
   styleUrls: ['./recipe-detail.component.css']
 })
 export class RecipeDetailComponent implements OnInit, OnDestroy {
- @Input('recipeData') RecipeData: RecipeModel;
+ recipesState: Observable<fromRecipeReducers.State>;
  subscription: Subscription;
  id: number;
- subscriptionRecipe: Subscription;
 
-  constructor(private recipeService: RecipeService, private route: ActivatedRoute, private router: Router) { }
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private store: Store<fromRecipeReducers.FeatureStore>
+  ) { }
 
   ngOnInit() {
     this.subscription = this.route.params.subscribe(
       (params: Params) => {
-        this.id = params['id'];
-        this.RecipeData = this.recipeService.getRecipe(this.id);
-
+        this.id = +params['id'];
+        if (
+          // this may be cheching out if valid id recived
+          this.id >= 0
+        ) {
+          this.recipesState = this.store.select('recipes');
+          console.log('+ On init: id = ' + this.id);
+        } else {
+          console.log('On init: id = ' + this.id);
+          this.router.navigate(['/not-found']);
+        }
       }
-    );
-    this.subscriptionRecipe = this.recipeService.recipeChanged.subscribe(
-      (recipes: RecipeModel[]) => this.RecipeData = recipes[this.id]
     );
   }
   ngOnDestroy() {
     this.subscription.unsubscribe();
   }
   toShopingList() {
-    this.recipeService.toShopingList(this.RecipeData.ingredients);
-  }
-  deleteRecipe() {
-    this.recipeService.deleteRecipe(this.id);
-    this.router.navigate(['..'], {relativeTo: this.route});
+    this.store.select('recipes')
+      .take(1)
+      .subscribe(
+        (recipeState: fromRecipeReducers.State) => {
+          console.log('ingredients: ', recipeState.recipes[this.id].ingredients);
+          if(recipeState.recipes[this.id].ingredients.length) {
+            this.store.dispatch(new ShoppingListActions.AddIngredients(recipeState.recipes[this.id].ingredients));
+          } else {
+            alert('There are no any ingredient in current recipe!');
+            console.log('empty');
+          }
+        }
+      );
   }
 
+  deleteRecipe() {
+    this.store.dispatch(new RecipesActions.DeleteRecipe(this.id));
+    this.router.navigate(['..'], {relativeTo: this.route});
+  }
 }
