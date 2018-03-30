@@ -22,7 +22,10 @@ export class AuthEffects {
     })
     .switchMap( (authData: {username: string, password: string}) => {
       return fromPromise(firebase.auth()
-        .createUserWithEmailAndPassword(authData.username, authData.password))
+        .createUserWithEmailAndPassword(authData.username, authData.password).catch(error => {
+          console.log();
+          throw ('Registration error: ' + error.message);
+        }))
         .switchMap( () => {
           return fromPromise(firebase.auth().currentUser.getIdToken());
         })
@@ -37,7 +40,14 @@ export class AuthEffects {
               payload: token
             }
           ];
-        }).catch(error => Observable.of({type: AuthActions.ERROR, payload: error}));
+        }).catch(error => {
+          return [
+            {
+              type: AuthActions.ERROR,
+              payload: error
+            }
+          ];
+        });
     });
 
   @Effect()
@@ -48,9 +58,16 @@ export class AuthEffects {
     })
     .switchMap( (authData: {username: string, password: string}) => {
       return fromPromise(firebase.auth()
-        .signInWithEmailAndPassword(authData.username, authData.password))
+        .signInWithEmailAndPassword(authData.username, authData.password)
+        .catch(error => {
+          console.log('error in trying signIn', error);
+          throw error.message;
+        } ))
         .switchMap( () => {
-          return fromPromise(firebase.auth().currentUser.getIdToken());
+          return fromPromise(firebase.auth().currentUser.getIdToken().catch(error => {
+            console.log('error in getIdToken', error);
+            throw error.message;
+          }) );
         })
         .mergeMap( (token: string) => {
           this.router.navigate(['/']);
@@ -63,7 +80,17 @@ export class AuthEffects {
               payload: token
             }
           ];
-        }).catch(error => Observable.of({type: AuthActions.ERROR, payload: error}));
+        }).catch( error => {
+          console.log(error);
+            // return Observable.of({type: AuthActions.ERROR, payload: error});
+          return [
+            {
+              type: AuthActions.ERROR,
+              payload: error
+            }
+          ];
+
+        });
     } );
 
   @Effect({dispatch: false})

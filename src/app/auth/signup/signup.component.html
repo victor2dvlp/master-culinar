@@ -27,5 +27,8 @@
       </div>
       <button class="btn btn-primary" type="submit" [disabled]="f.invalid">Sign up</button>
     </form>
+    <ng-template [ngIf]="(authState | async).errorText">
+      <p class="error">{{ (authState | async).errorText }}</p>
+    </ng-template>
   </div>
 </div>

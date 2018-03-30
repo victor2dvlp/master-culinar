@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import {NgForm} from "@angular/forms";
-import {Router} from "@angular/router";
 import {AppState} from "../../store/app.reducers";
 import {Store} from "@ngrx/store";
 import * as AuthActions from '../store/auth.actions';
+import * as fromAuth from "../store/auth.reducers";
+import {Observable} from "rxjs/Observable";
 
 @Component({
   selector: 'app-signin',
@@ -12,12 +13,15 @@ import * as AuthActions from '../store/auth.actions';
 })
 export class SigninComponent implements OnInit {
 
-  constructor(private store: Store<AppState>, private router: Router) { }
+  authState: Observable<fromAuth.State>;
+
+  constructor(private store: Store<AppState>) { }
 
   ngOnInit() {
+    this.authState = this.store.select('auth');
+    this.store.dispatch(new AuthActions.ErrorAuth(''));
   }
   onSignin(form: NgForm) {
-    this.router.navigate(['/']);
     const email = form.value.email;
     const password = form.value.password;
     console.log('onSignIn submit');
