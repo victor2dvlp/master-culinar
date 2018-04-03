@@ -57,7 +57,6 @@ export class RecipeEditComponent implements OnInit {
     let recipeIngredients = new FormArray([]);
 
     if (this.editMode) {
-      // const recipe = this.recipeService.getRecipe(this.id);
       this.store.select('recipes')
         .take(1)
         .subscribe(
@@ -101,6 +100,9 @@ export class RecipeEditComponent implements OnInit {
 
   onCancel() {
     this.router.navigate(['..'], {relativeTo: this.route});
+  }
+  trackByFn(index: any, item: any) {
+    return index;
   }
 
 }

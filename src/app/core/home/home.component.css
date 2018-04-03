@@ -2,20 +2,31 @@
   padding-top: 8vh;
   height: 91vh;
   width: 100%;
-  background: url('start_screen.jpg');
+  background: url('recipes_hero.jpg');
   -webkit-background-size: 100% auto;
   background-size: 100% auto;
 }
 .main-block h1 {
   font-family: 'ConfettiStream';
-  font-size: 80px;
+  font-size: 100px;
   color: #10c7d2;
-  margin-top: 50px;
+  margin-top: 30%;
+  animation: showRight 1s ease-out;
 }
-@media screen and (max-width: 1200px) {
+@media screen and (max-width: 1300px) {
   .main-block {
     -webkit-background-size: auto 100%;
     background-size: auto 100%;
     background-position: top center;
+  }
+}
+@keyframes showRight {
+  0% {
+    opacity: 0;
+    transform: translateX(200px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
   }
 }

@@ -5,11 +5,13 @@ import {Store} from "@ngrx/store";
 import * as AuthActions from '../store/auth.actions';
 import * as fromAuth from "../store/auth.reducers";
 import {Observable} from "rxjs/Observable";
+import {fadeAnimation} from "../../shared/fade.animation";
 
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
-  styleUrls: ['./signup.component.css']
+  styleUrls: ['./signup.component.css'],
+  animations: [fadeAnimation]
 })
 export class SignupComponent implements OnInit {
 

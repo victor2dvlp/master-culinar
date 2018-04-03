@@ -57,11 +57,11 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-xs-12" formArrayName="ingredients">
-          <div class="form-group">
+        <div class="col-xs-12">
+          <div class="form-group" formArrayName="ingredients">
             <div
               class="row"
-              *ngFor="let ingredient of recipeForm.get('ingredients').value; let i = index"
+              *ngFor="let ingredient of recipeForm.get('ingredients').value; let i = index; trackBy:trackByFn"
               [formGroupName]="i"
               style="margin-top: 10px"
             >

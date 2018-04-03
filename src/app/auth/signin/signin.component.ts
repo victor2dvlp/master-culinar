@@ -5,11 +5,13 @@ import {Store} from "@ngrx/store";
 import * as AuthActions from '../store/auth.actions';
 import * as fromAuth from "../store/auth.reducers";
 import {Observable} from "rxjs/Observable";
+import {fadeAnimation} from "../../shared/fade.animation";
 
 @Component({
   selector: 'app-signin',
   templateUrl: './signin.component.html',
-  styleUrls: ['./signin.component.css']
+  styleUrls: ['./signin.component.css'],
+  animations: [fadeAnimation]
 })
 export class SigninComponent implements OnInit {
 

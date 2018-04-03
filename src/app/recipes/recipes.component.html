@@ -1,22 +1,21 @@
-<div class="main-block">
-<div class="container">
-  <div class="row">
-    <div class="col-xs-12 col-md-5">
-      <app-recipe-list></app-recipe-list>
-    </div>
-    <div class="col-xs-12 col-md-7">
-      <!--<app-recipe-detail-->
-      <!--[recipeData]="RecipeRes"-->
-      <!--*ngIf="RecipeRes; else infoElement">-->
+<div class="main-block" [@shadow]>
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12 col-md-5">
+        <app-recipe-list></app-recipe-list>
+      </div>
+      <div class="col-xs-12 col-md-7">
+        <!--<app-recipe-detail-->
+        <!--[recipeData]="RecipeRes"-->
+        <!--*ngIf="RecipeRes; else infoElement">-->
 
-      <!--</app-recipe-detail>-->
-      <!--<ng-template #infoElement>-->
-      <!--<p>Select the recipe</p>-->
-      <!--</ng-template>-->
-      <router-outlet></router-outlet>
+        <!--</app-recipe-detail>-->
+        <!--<ng-template #infoElement>-->
+        <!--<p>Select the recipe</p>-->
+        <!--</ng-template>-->
+        <router-outlet></router-outlet>
+      </div>
     </div>
   </div>
-</div>
-
 </div>
 

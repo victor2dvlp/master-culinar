@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row" [@shadow]>
   <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
     <form (ngSubmit)="onSignin(f)" #f="ngForm">
       <div class="form-group">
@@ -25,7 +25,7 @@
           #password="ngModel"
           ngModel required>
       </div>
-      <button class="btn btn-primary" type="submit" [disabled]="f.invalid">Sign in</button>
+      <button class="my-btn-style" type="submit" [disabled]="f.invalid">Sign in</button>
     </form>
     <ng-template [ngIf]="(authState | async).errorText">
       <p class="error">{{ (authState | async).errorText }}</p>

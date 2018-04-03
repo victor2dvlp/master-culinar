@@ -5,11 +5,13 @@ import {Observable} from "rxjs/Observable";
 import {Store} from "@ngrx/store";
 import * as shoppingListActions from './state/shopping-list.actions';
 import * as fromApp from '../store/app.reducers';
+import {fadeAnimation} from "../shared/fade.animation";
 
 @Component({
   selector: 'app-shopping-list',
   templateUrl: './shopping-list.component.html',
-  styleUrls: ['./shopping-list.component.css']
+  styleUrls: ['./shopping-list.component.css'],
+  animations: [fadeAnimation]
 })
 export class ShoppingListComponent implements OnInit {
   shoppingListState: Observable<{ingredients: Ingredient[]}>;
