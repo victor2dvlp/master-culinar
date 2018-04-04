@@ -16,4 +16,7 @@
   color: #d29810;
   text-shadow: 0 1px 10px #d29810;
 }
+html {
+  overflow-x: hidden;
+}
 

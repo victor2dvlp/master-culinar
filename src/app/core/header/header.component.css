@@ -16,6 +16,7 @@ nav .nav {
 }
 .navbar-brand {
   display: block;
+  height: auto;
   width: 100%;
   position: relative;
 }
@@ -32,43 +33,59 @@ nav a img {
 .navbar-nav {
   margin-bottom: 0;
 }
+.menu li a {
+  font-family: 'Ubuntu';
+  font-weight: bold;
+  font-size: 20px;
+}
 .navbar-right {
   margin-right: 10px;
   transform: none;
 }
-/*nav::after {*/
-  /*content: '';*/
-  /*position: absolute;*/
-  /*bottom: 0;*/
-  /*left: 0;*/
-  /*width: 100%;*/
-  /*height: 10vh;*/
-  /*background: lightgoldenrodyellow;*/
-  /*border-bottom: 2px solid #e89b27;*/
-  /*box-shadow: 0 9px 18px -8px #000;*/
-  /*transform-origin: top right;*/
-  /*transform: skewY(-2deg);*/
-  /*z-index: -1;*/
-/*}*/
 nav::after {
   content: '';
   position: absolute;
-  top: 100%;
+  bottom: 0;
   left: 0;
-  width: 100%;
+  width: 10px;
   height: 0;
-  border-right: 100vw solid transparent;
-  border-top: 100px solid lightgoldenrodyellow;
-  z-index: -1;
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+  border-bottom: 100vw solid #e89b27;
+  border-right: 100px solid transparent;
+  border-top: none;
+  transform-origin: left bottom;
+  transform: rotate(90deg);
+
+  z-index: -2;
 }
 nav::before {
   content: '';
   display: block;
   position: absolute;
-  top: 100%;
+  bottom: 2px;
   left: 0;
-  border-right: 105vw solid transparent;
-  border-top: 105px solid #e89b27;
-  z-index: -2;
+  width: 10px;
+  height: 0;
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+  border-bottom: 100vw solid lightgoldenrodyellow;
+  border-right: 100px solid transparent;
+  border-top: none;
+  transform-origin: left bottom;
+  transform: rotate(90deg);
+  z-index: -1;
+}
+@media screen and (max-width:1000px) {
+  nav a img {
+    position: static;
+    width: 70%;
+    margin-left: 15%;
+  }
+  nav a {
+    text-align: center;
+  }
 }
 
